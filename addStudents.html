@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="sidebar">
+<h2>Faculty</h2>
+<button onclick="location.href='dashboard.html'">Dashboard</button>
+<button onclick="location.href='createExam.html'">Create Exam</button>
+<button onclick="location.href='questionPool.html'">Question Pool</button>
+<button class="active" onclick="location.href='addStudents.html'">Students</button>
+<button class = "lolo"  onclick="logout()">Logout</button>
+
+</div>
+
+<div class="main">
+
+<div class="card">
+
+<h2>Add Students</h2>
+
+<div id="students"></div>
+
+</div>
+
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/addStudents.js"></script>
+
+</body>
+</html>

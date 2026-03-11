@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Create Question</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="sidebar">
+
+<h2>Faculty</h2>
+
+<button onclick="location.href='dashboard.html'">Dashboard</button>
+<button onclick="location.href='createExam.html'">Create Exam</button>
+<button class="active" onclick="location.href='questionPool.html'">Question Pool</button>
+<button onclick="location.href='addStudents.html'">Students</button>
+<button class = "lolo"  onclick="logout()">Logout</button>
+
+</div>
+
+
+<div class="main">
+
+<div class="card form-card">
+
+<h1>Create Question</h1>
+
+<label>Question</label>
+<textarea id="text" placeholder="Enter question"></textarea>
+
+<label>Subject</label>
+
+<select id="subject">
+<option>Physics</option>
+<option>Physical Chemistry</option>
+<option>Organic Chemistry</option>
+<option>Inorganic Chemistry</option>
+<option>Mathematics</option>
+</select>
+
+<label>Options</label>
+
+<div class="options">
+
+<input id="a" placeholder="Option A">
+
+<input id="b" placeholder="Option B">
+
+<input id="c" placeholder="Option C">
+
+<input id="d" placeholder="Option D">
+
+</div>
+
+<div class="row">
+
+<div>
+<label>Correct Answer (0-3)</label>
+<input id="correct">
+</div>
+
+<div>
+<label>Marks</label>
+<input id="marks" placeholder="1 or 2">
+</div>
+
+</div>
+
+<button class="primary big" onclick="createQuestion()">
+Save Question
+</button>
+
+</div>
+
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/questionPool.js"></script>
+
+</body>
+</html>

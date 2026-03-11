@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Faculty Login</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body class="centered">
+
+<div class="card login-card">
+
+<h2>Faculty Login</h2>
+
+<label>Username</label>
+<input id="username" placeholder="Enter username">
+
+<label>Password</label>
+<input id="password" type="password" placeholder="Enter password">
+
+<button id="loginBtn" class="primary" onclick="login()">
+Login
+</button>
+
+<p id="error" class="error"></p>
+
+</div>
+
+<script src="js/config.js"></script>
+
+<script>
+
+if(localStorage.getItem("token")){
+window.location.href = "dashboard.html"
+}
+
+async function login(){
+
+const btn = document.getElementById("loginBtn")
+const error = document.getElementById("error")
+
+btn.disabled = true
+error.innerText = ""
+
+try{
+
+const res = await fetch(BASE_URL + "/login/login",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+username: document.getElementById("username").value,
+password: document.getElementById("password").value
+})
+})
+
+const data = await res.json()
+
+if(!res.ok){
+error.innerText = data.message || "Login failed"
+btn.disabled = false
+return
+}
+
+if(!data.token){
+error.innerText = "Invalid login response"
+btn.disabled = false
+return
+}
+
+localStorage.setItem("token", data.token)
+
+window.location.href = "dashboard.html"
+
+}
+catch(err){
+
+error.innerText = "Server connection failed"
+
+}
+
+btn.disabled = false
+
+}
+
+</script>
+
+</body>
+</html>
