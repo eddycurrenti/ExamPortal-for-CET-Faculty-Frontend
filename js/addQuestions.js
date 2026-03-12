@@ -1,11 +1,17 @@
+
 // const token = localStorage.getItem("token")
 
+// if (!token) {
+//     window.location.href = "login.html"
+// }
+
 // const headers = {
-// "Authorization": "Bearer " + token
+//     Authorization: "Bearer " + token
 // }
 
 // const urlParams = new URLSearchParams(window.location.search)
 // const examId = urlParams.get("examId")
+// /* load questions from pool */
 
 // async function loadQuestions(){
 
@@ -13,23 +19,51 @@
 
 // const res = await fetch(
 // BASE_URL + "/addQuestions/getQues/" + examId + "/" + subject,
-// {
-// headers
-// }
+// { headers }
 // )
 
 // const data = await res.json()
 
 // const list = document.getElementById("list")
+// const subSelect = document.getElementById("subTopic")
 
-// list.innerHTML=""
+// list.innerHTML = ""
 
 // if(!Array.isArray(data)){
 // list.innerHTML = `<p>${data.message || "No questions found"}</p>`
 // return
 // }
 
-// data.forEach(q=>{
+// /* extract unique subtopics from backend data */
+
+// const subtopics = [...new Set(data.map(q => q.subTopic))]
+
+// subSelect.innerHTML = `<option value="">All Subtopics</option>`
+
+// subtopics.forEach(st=>{
+// subSelect.innerHTML += `<option value="${st}">${st}</option>`
+// })
+
+// /* render all questions initially */
+
+// renderQuestions(data)
+
+// }
+
+// /* render function */
+
+// function renderQuestions(data){
+
+// const list = document.getElementById("list")
+// const subTopic = document.getElementById("subTopic").value
+
+// list.innerHTML=""
+
+// const filtered = subTopic
+// ? data.filter(q => q.subTopic === subTopic)
+// : data
+
+// filtered.forEach(q=>{
 
 // list.innerHTML += `
 
@@ -45,9 +79,7 @@
 
 // <button class="primary"
 // onclick="addQuestion('${q._id}')">
-
 // Add
-
 // </button>
 
 // </div>
@@ -58,160 +90,128 @@
 
 // }
 
+// /* add question to exam */
 
+// async function addQuestion(id) {
 
-// async function addQuestion(id){
+//     try {
 
-// const res = await fetch(
-// BASE_URL + "/addQuestions/addToExam",
-// {
-// method:"POST",
+//         const res = await fetch(
+//             BASE_URL + "/addQuestions/addToExam",
+//             {
+//                 method: "POST",
 
-// headers:{
-// "Content-Type":"application/json",
-// ...headers
-// },
+//                 headers: {
+//                     "Content-Type": "application/json",
+//                     ...headers
+//                 },
 
-// body:JSON.stringify({
+//                 body: JSON.stringify({
 
-// examId,
-// questionId:id,
-// order:1
+//                     examId,
+//                     questionId: id,
+//                     order: Date.now()
 
-// })
+//                 })
 
-// })
+//             }
+//         )
 
-// const data = await res.json()
+//         const data = await res.json()
 
-// alert(data.message || "Question Added")
+//         alert(data.message || "Question Added")
+
+//     }
+//     catch (err) {
+
+//         console.error(err)
+//         alert("Failed to add question")
+
+//     }
 
 // }
 
+// /* load questions on page start */
+
+
+// document.getElementById("subTopic").addEventListener("change", ()=>{
 // loadQuestions()
+// })
+// loadQuestions()
+
+/* =========================
+   AUTH + BASIC SETUP
+========================= */
 
 const token = localStorage.getItem("token")
 
-if(!token){
-window.location.href = "login.html"
+if (!token) {
+    window.location.href = "login.html"
 }
 
 const headers = {
-Authorization: "Bearer " + token
+    Authorization: "Bearer " + token
 }
 
 const urlParams = new URLSearchParams(window.location.search)
 const examId = urlParams.get("examId")
 
-/* subtopics map */
+/* store fetched questions */
 
-const subtopics = {
+let cachedQuestions = []
 
-Physics:[
-"Mechanics",
-"Thermodynamics",
-"Optics",
-"Modern Physics"
-],
-
-Mathematics:[
-"Algebra",
-"Calculus",
-"Coordinate Geometry",
-"Probability"
-],
-
-"Physical Chemistry":[
-"Thermodynamics",
-"Kinetics",
-"Electrochemistry"
-],
-
-"Organic Chemistry":[
-"Hydrocarbons",
-"Reactions",
-"Biomolecules"
-],
-
-"Inorganic Chemistry":[
-"Periodic Table",
-"Coordination Compounds",
-"Chemical Bonding"
-]
-
-}
-
-/* populate subtopics when subject changes */
-
-document.getElementById("subject").addEventListener("change", ()=>{
-
-const subject = document.getElementById("subject").value
-const subSelect = document.getElementById("subTopic")
-
-subSelect.innerHTML = `<option value="">All Subtopics</option>`
-
-if(subtopics[subject]){
-
-subtopics[subject].forEach(st=>{
-subSelect.innerHTML += `<option value="${st}">${st}</option>`
-})
-
-}
-
-})
-
-/* load questions from pool */
+/* =========================
+   LOAD QUESTIONS FROM API
+========================= */
 
 async function loadQuestions(){
 
 const subject = document.getElementById("subject").value
 const subTopic = document.getElementById("subTopic").value
 
+if(!subject || !subTopic){
+alert("Select subject and subtopic")
+return
+}
+
 try{
 
 const res = await fetch(
-BASE_URL + "/addQuestions/getQues/" + examId + "/" + subject,
+BASE_URL + "/addQuestions/getQues/" + examId + "/" + subject + "/" + subTopic,
 { headers }
 )
+
+if(!res.ok){
+const text = await res.text()
+console.error("API error:", text)
+return
+}
 
 const data = await res.json()
 
 const list = document.getElementById("list")
 
-list.innerHTML=""
-
-/* if API returned message */
+list.innerHTML = ""
 
 if(!Array.isArray(data)){
 list.innerHTML = `<p>${data.message || "No questions found"}</p>`
 return
 }
 
-/* filter by subtopic if selected */
-
-const filtered = subTopic
-? data.filter(q => q.subTopic === subTopic)
-: data
-
-if(filtered.length === 0){
-list.innerHTML = "<p>No questions for this subtopic</p>"
-return
-}
-
-/* render questions */
-
-filtered.forEach(q=>{
+data.forEach(q=>{
 
 list.innerHTML += `
 
 <div class="item">
 
+<div>
 <div class="question-title">
 ${q.questionText}
 </div>
 
 <div class="question-subtopic">
 ${q.subTopic}
+</div>
 </div>
 
 <button class="primary"
@@ -237,47 +237,151 @@ document.getElementById("list").innerHTML =
 
 }
 
-/* add question to exam */
+async function loadSubTopics(){
 
-async function addQuestion(id){
+const subject = document.getElementById("subject").value
 
-try{
+if(!subject) return
 
 const res = await fetch(
-BASE_URL + "/addQuestions/addToExam",
-{
-method:"POST",
-
-headers:{
-"Content-Type":"application/json",
-...headers
-},
-
-body:JSON.stringify({
-
-examId,
-questionId:id,
-order: Date.now()
-
-})
-
-}
+BASE_URL + "/addQuestions/getQues/" + examId + "/" + subject,
+{ headers }
 )
+
+if(!res.ok){
+const text = await res.text()
+console.error("API error:", text)
+return
+}
 
 const data = await res.json()
 
-alert(data.message || "Question Added")
+const subSelect = document.getElementById("subTopic")
+
+subSelect.innerHTML = `<option value="">Select Subtopic</option>`
+
+if(!Array.isArray(data)) return
+
+const subtopics = [...new Set(data.map(q => q.subTopic))]
+
+subtopics.forEach(st=>{
+subSelect.innerHTML += `<option value="${st}">${st}</option>`
+})
 
 }
-catch(err){
+/* =========================
+   RENDER QUESTIONS
+========================= */
 
-console.error(err)
-alert("Failed to add question")
+function renderQuestions() {
+
+    const list = document.getElementById("list")
+    const subTopic = document.getElementById("subTopic").value
+
+    list.innerHTML = ""
+
+    const filtered = subTopic
+        ? cachedQuestions.filter(q => q.subTopic === subTopic)
+        : cachedQuestions
+
+    if (filtered.length === 0) {
+        list.innerHTML = "<p>No questions for this subtopic</p>"
+        return
+    }
+
+    filtered.forEach(q => {
+
+        list.innerHTML += `
+
+        <div class="item">
+
+            <div>
+
+                <div class="question-title">
+                    ${q.questionText}
+                </div>
+
+                <div class="question-subtopic">
+                    ${q.subTopic}
+                </div>
+
+            </div>
+
+            <button class="primary"
+                onclick="addQuestion('${q._id}')">
+                Add
+            </button>
+
+        </div>
+
+        `
+
+    })
 
 }
 
+/* =========================
+   ADD QUESTION TO EXAM
+========================= */
+
+async function addQuestion(questionId) {
+
+    try {
+
+        const res = await fetch(
+            BASE_URL + "/addQuestions/addToExam",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json",
+                    ...headers
+                },
+
+                body: JSON.stringify({
+                    examId,
+                    questionId,
+                    order: Date.now()
+                })
+
+            }
+        )
+
+        const data = await res.json()
+
+        alert(data.message || "Question Added")
+
+    }
+    catch (err) {
+
+        console.error(err)
+        alert("Failed to add question")
+
+    }
+
 }
 
-/* load questions on page start */
+/* =========================
+   EVENT LISTENERS
+========================= */
 
-loadQuestions()
+document.getElementById("subject")
+.addEventListener("change", loadSubTopics)
+
+document.getElementById("subTopic")
+.addEventListener("change", loadQuestions)
+/* =========================
+   OPTIONAL AUTO LOAD
+========================= */
+
+/* if subject already selected */
+
+window.addEventListener("DOMContentLoaded", () => {
+
+    const subject = document.getElementById("subject").value
+
+    if (subject) {
+        loadQuestions()
+    }
+
+})

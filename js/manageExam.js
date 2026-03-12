@@ -1,29 +1,88 @@
 const token = localStorage.getItem("token")
 
 const headers = {
-"Authorization": "Bearer " + token,
-"Content-Type":"application/json"
+    "Authorization": "Bearer " + token,
+    "Content-Type": "application/json"
 }
 
 const urlParams = new URLSearchParams(window.location.search)
 const examId = urlParams.get("examId")
 
-async function loadExam(){
+async function loadExam() {
 
-const res = await fetch(
-BASE_URL + "/createExam/getAlltheTests",
-{ headers }
-)
+    const res = await fetch(
+        BASE_URL + "/createExam/getAlltheTests",
+        { headers }
+    )
 
-const exams = await res.json()
+    const exams = await res.json()
 
-const exam = exams.find(e=>e._id === examId)
+    const exam = exams.find(e => String(e._id) === String(examId))
 
-document.getElementById("examTitle").innerText = exam.title
+    document.getElementById("examTitle").innerText = exam.title
 
-loadQuestions()
+    loadQuestions()
 
 }
+
+
+// async function loadQuestions() {
+
+//     const subject = document.getElementById("subject").value
+
+//     const res = await fetch(
+//         BASE_URL + "/addQuestions/examQuestions/" + examId + "/" + subject,
+//         { headers }
+//     )
+
+//     const data = await res.json()
+
+//     const list = document.getElementById("questionList")
+
+//     list.innerHTML = ""
+
+//     if (data.message) {
+//         list.innerHTML = `<p>${data.message}</p>`
+//         return
+//     }
+
+//     data.forEach((q, index) => {
+
+//         list.innerHTML += `
+
+// <div class="item">
+
+// <div class="question-title">
+// ${index + 1}. ${q.questionText}
+// </div>
+
+// <div class="question-subject">
+// ${q.subject}
+// </div>
+
+// <div class="actions">
+
+// <button class="primary" onclick="removeQuestion('${q._id}')">
+// Remove
+// </button>
+
+// <button class="primary" onclick="reorderQuestion('${q._id}', ${index + 1})">
+// Change Order
+// </button>
+
+// <button class="primary" onclick="replaceQuestion('${q._id}')">
+// Replace
+// </button>
+
+// </div>
+
+// </div>
+
+// `
+
+//     })
+
+// }
 
 
 async function loadQuestions(){
@@ -34,6 +93,14 @@ const res = await fetch(
 BASE_URL + "/addQuestions/examQuestions/" + examId + "/" + subject,
 { headers }
 )
+
+if(!res.ok){
+const text = await res.text()
+console.error("API error:", text)
+document.getElementById("questionList").innerHTML =
+"<p>Failed to load questions</p>"
+return
+}
 
 const data = await res.json()
 
@@ -83,104 +150,101 @@ Replace
 })
 
 }
+async function removeQuestion(questionId) {
 
+    if (!confirm("Remove this question?")) return
 
+    await fetch(
+        BASE_URL + "/addQuestions/editExamQuestions",
+        {
+            method: "PUT",
+            headers,
+            body: JSON.stringify({
+                examId,
+                action: "remove",
+                questionId
+            })
+        }
+    )
 
-async function removeQuestion(questionId){
-
-if(!confirm("Remove this question?")) return
-
-await fetch(
-BASE_URL + "/addQuestions/editExamQuestions",
-{
-method:"PUT",
-headers,
-body:JSON.stringify({
-examId,
-action:"remove",
-questionId
-})
-}
-)
-
-loadQuestions()
+    loadQuestions()
 
 }
 
 
 
-async function reorderQuestion(questionId,currentIndex){
+async function reorderQuestion(questionId, currentIndex) {
 
-const newOrder = prompt("Enter new order")
+    const newOrder = prompt("Enter new order")
 
-if(!newOrder) return
+    if (!newOrder) return
 
-await fetch(
-BASE_URL + "/addQuestions/editExamQuestions",
-{
-method:"PUT",
-headers,
-body:JSON.stringify({
-examId,
-action:"reorder",
-questionId,
-newOrder:Number(newOrder)
-})
-}
-)
+    await fetch(
+        BASE_URL + "/addQuestions/editExamQuestions",
+        {
+            method: "PUT",
+            headers,
+            body: JSON.stringify({
+                examId,
+                action: "reorder",
+                questionId,
+                newOrder: Number(newOrder)
+            })
+        }
+    )
 
-loadQuestions()
-
-}
-
-
-
-async function replaceQuestion(questionId){
-
-const newQuestionId = prompt("Enter new question id")
-
-if(!newQuestionId) return
-
-await fetch(
-BASE_URL + "/addQuestions/editExamQuestions",
-{
-method:"PUT",
-headers,
-body:JSON.stringify({
-examId,
-action:"replace",
-questionId,
-newQuestionId
-})
-}
-)
-
-loadQuestions()
+    loadQuestions()
 
 }
 
 
 
-async function deleteExam(){
+async function replaceQuestion(questionId) {
 
-if(!confirm("Delete this exam?")) return
+    const newQuestionId = prompt("Enter new question id")
 
-const res = await fetch(
-BASE_URL + "/delete/delete/" + examId,
-{
-method:"DELETE",
-headers
+    if (!newQuestionId) return
+
+    await fetch(
+        BASE_URL + "/addQuestions/editExamQuestions",
+        {
+            method: "PUT",
+            headers,
+            body: JSON.stringify({
+                examId,
+                action: "replace",
+                questionId,
+                newQuestionId
+            })
+        }
+    )
+
+    loadQuestions()
+
 }
-)
 
-const data = await res.json()
 
-alert(data.message)
 
-window.location.href="dashboard.html"
+async function deleteExam() {
+
+    if (!confirm("Delete this exam?")) return
+
+    const res = await fetch(
+        BASE_URL + "/delete/delete/" + examId,
+        {
+            method: "DELETE",
+            headers
+        }
+    )
+
+    const data = await res.json()
+
+    alert(data.message)
+
+    window.location.href = "dashboard.html"
 
 }
-
+document.getElementById("subject").addEventListener("change", loadQuestions)
 loadExam()
 
 
