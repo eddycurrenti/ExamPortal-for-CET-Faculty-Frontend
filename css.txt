@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+<!-- andajksfkjasnkdknas -->
+<!-- <div class="topbar">
+
+<div class="top-left">
+<h2>CET Test Platform</h2>
+</div>
+
+<div class="top-right">
+
+<span class="faculty-name">Faculty Panel</span>
+
+<button class="top-btn" onclick="location.href='dashboard.html'">
+Dashboard
+</button>
+
+<button class="logout-btn" onclick="logout()">
+Logout
+</button>
+
+</div>
+
+</div> -->
+
+<!-- asdasdasdasdas -->
+
+<div class="layout">
+<div class="sidebar">
+
+<h2>Faculty</h2>
+
+<button class="active" onclick="location.href='dashboard.html'">Dashboard</button>
+<button onclick="location.href='createExam.html'">Create Exam</button>
+<button onclick="location.href='questionPool.html'">Question Pool</button>
+<button onclick="location.href='addStudents.html'">Students</button>
+<button class = "lolo"  class = "lolo" onclick="logout()">Logout</button>
+
+</div>
+
+
+<div class="main">
+
+<h1>Dashboard</h1>
+
+<!-- stats cards -->
+
+<div class="stats">
+
+<div class="card stat">
+<h3>Total Students</h3>
+<p id="studentCount">0</p>
+</div>
+
+<div class="card stat">
+<h3>Total Exams</h3>
+<p id="examCount">0</p>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Your Exams</h2>
+
+<div id="examList"></div>
+
+</div>
+
+</div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/dashboard.js"></script>
+
+</body>
+</html>

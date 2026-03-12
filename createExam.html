@@ -1,3 +1,154 @@
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div style="font-family:Arial, Helvetica, sans-serif; margin:0;">
+<div style="
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:60px;
+background:rgb(17,13,32);
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 40px;
+box-shadow:0 2px 10px rgba(0,0,0,0.08);
+z-index:1000;
+">
+
+<div>
+<h2 style="color:#d1d5db; margin:0; font-size:20px;">CET Test Platform</h2>
+</div>
+
+<div style="display:flex; align-items:center; gap:15px;">
+
+<span style="font-size:14px; color:white;">Faculty Panel</span>
+
+<button onclick="location.href='dashboard.html'"
+style="
+background:#2563eb;
+color:white;
+border:none;
+padding:8px 16px;
+border-radius:6px;
+cursor:pointer;
+">
+Dashboard
+</button>
+
+<button onclick="logout()"
+style="
+background:#ef4444;
+color:white;
+border:none;
+padding:8px 16px;
+border-radius:6px;
+cursor:pointer;
+">
+Logout
+</button>
+
+</div>
+</div>
+
+<div style="
+position:fixed;
+top:60px;
+left:0;
+width:230px;
+height:calc(100vh - 60px);
+background:#111827;
+color:white;
+padding:25px 15px;
+display:flex;
+flex-direction:column;
+">
+
+<button onclick="location.href='dashboard.html'"
+style="padding:11px; margin-bottom:8px; border:none; background:none; color:#d1d5db; border-radius:6px; text-align:left; cursor:pointer;">
+Dashboard
+</button>
+
+<button onclick="location.href='createExam.html'"
+style="padding:11px; margin-bottom:8px; border:none; background:#2563eb; color:white; border-radius:6px; text-align:left; cursor:pointer;">
+Create Exam
+</button>
+
+<button onclick="location.href='questionPool.html'"
+style="padding:11px; margin-bottom:8px; border:none; background:none; color:#d1d5db; border-radius:6px; text-align:left; cursor:pointer;">
+Question Pool
+</button>
+
+<button onclick="location.href='addStudents.html'"
+style="padding:11px; margin-bottom:8px; border:none; background:none; color:#d1d5db; border-radius:6px; text-align:left; cursor:pointer;">
+Students
+</button>
+</div>
+
+<div style="margin-left:230px; margin-top:60px; padding:40px; background:#f4f6fa; min-height:100vh;">
+
+
+</div>
+
+</div>
+<div style="
+margin-left:230px;
+margin-top:60px;
+padding:40px;
+background:#f4f6fa;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:flex-start;
+">
+
+<div class="main" style="
+width:100%;
+max-width:900px;
+">
+
+<div class="card" style="
+padding:35px;
+border-radius:10px;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+background:white;
+">
+
+<h2 style="margin-bottom:20px;">Create Exam</h2>
+
+<input id="title" placeholder="Exam Title"
+style="width:100%;padding:12px;margin-bottom:12px;border-radius:6px;border:1px solid #ddd;">
+
+<input id="duration" placeholder="Duration"
+style="width:100%;padding:12px;margin-bottom:12px;border-radius:6px;border:1px solid #ddd;">
+
+<input id="marks" placeholder="Total Marks"
+style="width:100%;padding:12px;margin-bottom:20px;border-radius:6px;border:1px solid #ddd;">
+
+<button class="primary"
+onclick="createExam()"
+style="padding:10px 20px;">
+Create
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/createExam.js"></script>
+
+</body>
+</html> -->
+
 <!DOCTYPE html>
 <html>
 
@@ -7,32 +158,136 @@
 
 <body>
 
-<div class="sidebar">
-<h2>Faculty</h2>
+<div style="font-family:Arial, Helvetica, sans-serif; margin:0;">
 
-<button onclick="location.href='dashboard.html'">Dashboard</button>
-<button class="active" onclick="location.href='createExam.html'">Create Exam</button>
-<button onclick="location.href='questionPool.html'">Question Pool</button>
-<button onclick="location.href='addStudents.html'">Students</button>
-<button class = "lolo"  onclick="logout()">Logout</button>
+<div style="
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:60px;
+background:rgb(17,13,32);
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 40px;
+box-shadow:0 2px 10px rgba(0,0,0,0.08);
+z-index:1000;
+">
+
+<div>
+<h2 style="color:#d1d5db; margin:0; font-size:20px;">CET Test Platform</h2>
+</div>
+
+<div style="display:flex; align-items:center; gap:15px;">
+
+<span style="font-size:14px; color:white;">Faculty Panel</span>
+
+<button onclick="location.href='dashboard.html'"
+style="
+background:#2563eb;
+color:white;
+border:none;
+padding:8px 16px;
+border-radius:6px;
+cursor:pointer;
+">
+Dashboard
+</button>
+
+<button onclick="logout()"
+style="
+background:#ef4444;
+color:white;
+border:none;
+padding:8px 16px;
+border-radius:6px;
+cursor:pointer;
+">
+Logout
+</button>
+
+</div>
+</div>
+
+<div style="
+position:fixed;
+top:60px;
+left:0;
+width:230px;
+height:calc(100vh - 60px);
+background:#111827;
+color:white;
+padding:25px 15px;
+display:flex;
+flex-direction:column;
+">
+
+<button onclick="location.href='dashboard.html'"
+style="padding:11px;margin-bottom:8px;border:none;background:none;color:#d1d5db;border-radius:6px;text-align:left;cursor:pointer;">
+Dashboard
+</button>
+
+<button onclick="location.href='createExam.html'"
+style="padding:11px;margin-bottom:8px;border:none;background:#2563eb;color:white;border-radius:6px;text-align:left;cursor:pointer;">
+Create Exam
+</button>
+
+<button onclick="location.href='questionPool.html'"
+style="padding:11px;margin-bottom:8px;border:none;background:none;color:#d1d5db;border-radius:6px;text-align:left;cursor:pointer;">
+Question Pool
+</button>
+
+<button onclick="location.href='addStudents.html'"
+style="padding:11px;margin-bottom:8px;border:none;background:none;color:#d1d5db;border-radius:6px;text-align:left;cursor:pointer;">
+Students
+</button>
 
 </div>
 
-<div class="main">
+<div style="
+margin-left:230px;
+margin-top:60px;
+padding:40px;
+background:#f4f6fa;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:flex-start;
+">
 
-<div class="card">
+<div style="
+width:100%;
+max-width:700px;
+">
 
-<h2>Create Exam</h2>
+<div class="card" style="
+padding:35px;
+border-radius:10px;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+background:white;
+">
 
-<input id="title" placeholder="Exam Title">
+<h2 style="margin-bottom:20px;">Create Exam</h2>
 
-<input id="duration" placeholder="Duration">
+<input id="title" placeholder="Exam Title"
+style="width:100%;padding:12px;margin-bottom:12px;border-radius:6px;border:1px solid #ddd;">
 
-<input id="marks" placeholder="Total Marks">
+<input id="duration" placeholder="Duration"
+style="width:100%;padding:12px;margin-bottom:12px;border-radius:6px;border:1px solid #ddd;">
 
-<br><br>
+<input id="marks" placeholder="Total Marks"
+style="width:100%;padding:12px;margin-bottom:20px;border-radius:6px;border:1px solid #ddd;">
 
-<button class="primary" onclick="createExam()">Create</button>
+<button class="primary"
+onclick="createExam()"
+style="padding:10px 20px;">
+Create
+</button>
+
+</div>
+
+</div>
 
 </div>
 

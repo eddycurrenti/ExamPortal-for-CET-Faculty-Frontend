@@ -9,17 +9,11 @@
 <body>
 
 <div class="sidebar">
-
-<h2>Faculty</h2>
-
 <button onclick="location.href='dashboard.html'">Dashboard</button>
 <button onclick="location.href='createExam.html'">Create Exam</button>
 <button onclick="location.href='questionPool.html'">Question Pool</button>
 <button onclick="location.href='addStudents.html'">Students</button>
-<button class = "lolo"  onclick="logout()">Logout</button>
-
 </div>
-
 
 <div class="main">
 
@@ -30,13 +24,16 @@
 <div class="row">
 
 <select id="subject">
-
+<option value="">Select Subject</option>
 <option value="Physics">Physics</option>
 <option value="Mathematics">Mathematics</option>
 <option value="Physical Chemistry">Physical Chemistry</option>
 <option value="Organic Chemistry">Organic Chemistry</option>
 <option value="Inorganic Chemistry">Inorganic Chemistry</option>
+</select>
 
+<select id="subTopic">
+<option value="">All Subtopics</option>
 </select>
 
 <button class="primary" onclick="loadQuestions()">

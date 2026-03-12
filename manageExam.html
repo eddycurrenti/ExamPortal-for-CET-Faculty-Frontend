@@ -2,67 +2,167 @@
 <html>
 
 <head>
-<link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<div class="sidebar">
+    <!-- <div class="sidebar">
 
-<h2>Faculty</h2>
 
 <button onclick="location.href='dashboard.html'">Dashboard</button>
 <button onclick="location.href='createExam.html'">Create Exam</button>
 <button onclick="location.href='questionPool.html'">Question Pool</button>
 <button onclick="location.href='addStudents.html'">Students</button>
-<button class = "lolo"  onclick="logout()">Logout</button>
 
-</div>
+</div> -->
+
+    <!-- TOPBAR + SIDEBAR BLOCK -->
+
+    <div style="font-family:Arial, Helvetica, sans-serif; margin:0;">
+
+        <!-- TOPBAR -->
+        <div style="
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:60px;
+background:rgb(17,13,32);
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 40px;
+box-shadow:0 2px 10px rgba(0,0,0,0.08);
+z-index:1000;
+">
+
+            <div>
+                <h2 style="color:#d1d5db; margin:0; font-size:20px;">CET Test Platform</h2>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:15px;">
+
+                <span style="font-size:14px; color:white;">Faculty Panel</span>
+
+                <button onclick="location.href='dashboard.html'" style="
+background:#2563eb;
+color:white;
+border:none;
+padding:8px 16px;
+border-radius:6px;
+cursor:pointer;
+">
+                    Dashboard
+                </button>
+
+                <button onclick="logout()" style="
+background:#ef4444;
+color:white;
+border:none;
+padding:8px 16px;
+border-radius:6px;
+cursor:pointer;
+">
+                    Logout
+                </button>
+
+            </div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div style="
+position:fixed;
+top:60px;
+left:0;
+width:230px;
+height:calc(100vh - 60px);
+background:#111827;
+color:white;
+padding:25px 15px;
+display:flex;
+flex-direction:column;
+">
+
+            <button class="active" onclick="location.href='dashboard.html'"
+                style="padding:11px; margin-bottom:8px; border:none; background:#2563eb; color:white; border-radius:6px; text-align:left;">
+                Dashboard
+            </button>
+
+            <button onclick="location.href='createExam.html'"
+                style="padding:11px; margin-bottom:8px; border:none; background:none; color:#d1d5db; border-radius:6px; text-align:left; cursor:pointer;">
+                Create Exam
+            </button>
+
+            <button onclick="location.href='questionPool.html'"
+                style="padding:11px; margin-bottom:8px; border:none; background:none; color:#d1d5db; border-radius:6px; text-align:left; cursor:pointer;">
+                Question Pool
+            </button>
+
+            <button onclick="location.href='addStudents.html'"
+                style="padding:11px; margin-bottom:8px; border:none; background:none; color:#d1d5db; border-radius:6px; text-align:left; cursor:pointer;">
+                Students
+            </button>
+
+        </div>
+
+        <!-- MAIN CONTENT WRAPPER -->
+        <div style="margin-left:230px; margin-top:60px; padding:40px; background:#f4f6fa; min-height:100vh;">
+
+            <!-- YOUR PAGE CONTENT STARTS HERE -->
 
 
-<div class="main">
+        </div>
 
-<h1>Manage Exam</h1>
+    </div>
 
-<div class="card">
+    <div class="main">
 
-<h2 id="examTitle"></h2>
+        <h1>Manage Exam</h1>
 
-<button class="danger" onclick="deleteExam()">
-Delete Exam
-</button>
+        <div class="card">
 
-</div>
+            <h2 id="examTitle"></h2>
 
-<div class="card">
+            <button class="primary danger" onclick="deleteExam()">
+                Delete Exam
+            </button>
 
-<h3>Questions in Exam</h3>
+        </div>
 
-<div class="filter">
+        <div class="card">
 
-<select id="subject">
-<option value="Physics">Physics</option>
-<option value="Physical Chemistry">Physical Chemistry</option>
-<option value="Organic Chemistry">Organic Chemistry</option>
-<option value="Inorganic Chemistry">Inorganic Chemistry</option>
-<option value="Mathematics">Mathematics</option>
-</select>
+            <h3>Questions in Exam</h3>
 
-<button class="primary" onclick="loadQuestions()">
-Load Questions
-</button>
+            <div class="filter">
 
-</div>
+                <select id="subject">
+                    <option value="Physics">Physics</option>
+                    <option value="Physical Chemistry">Physical Chemistry</option>
+                    <option value="Organic Chemistry">Organic Chemistry</option>
+                    <option value="Inorganic Chemistry">Inorganic Chemistry</option>
+                    <option value="Mathematics">Mathematics</option>
+                </select>
 
-<div id="questionList"></div>
+                <button class="primary" onclick="loadQuestions()">
+                    Load Questions
+                </button>
 
-</div>
+            </div>
 
-</div>
+            <div id="questionList"></div>
 
-<script src="js/config.js"></script>
-<script src="js/auth.js"></script>
-<script src="js/manageExam.js"></script>
+        </div>
+
+    </div>
+    </div>
+
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/manageExam.js"></script>
 
 </body>
+
 </html>

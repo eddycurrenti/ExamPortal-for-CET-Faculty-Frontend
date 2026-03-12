@@ -246,3 +246,91 @@ color:red;
 margin-top:10px;
 font-size:14px;
 }
+
+
+/* TOP BAR */
+
+.topbar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:60px;
+background:white;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:0 30px;
+box-shadow:0 2px 8px rgba(0,0,0,0.08);
+z-index:1000;
+}
+
+.top-left h2{
+font-size:20px;
+font-weight:600;
+color:#111827;
+}
+
+.top-right{
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+.faculty-name{
+font-size:14px;
+color:#555;
+}
+
+.top-btn{
+background:#2563eb;
+color:white;
+border:none;
+padding:8px 16px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.top-btn:hover{
+background:#1d4ed8;
+}
+
+.logout-btn{
+background:#ef4444;
+color:white;
+border:none;
+padding:8px 16px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.logout-btn:hover{
+background:#dc2626;
+}
+
+/* LAYOUT */
+
+.layout{
+display:flex;
+margin-top:60px;
+}
+
+/* SIDEBAR FIX */
+
+.sidebar{
+width:230px;
+height:calc(100vh - 60px);
+position:fixed;
+top:60px;
+left:0;
+}
+
+/* MAIN AREA */
+
+.main{
+margin-left:230px;
+padding:40px;
+flex:1;
+background:#f4f6fa;
+min-height:calc(100vh - 60px);
+}

@@ -31,7 +31,7 @@ async function loadQuestions(){
 const subject = document.getElementById("subject").value
 
 const res = await fetch(
-BASE_URL + "/addQuestions/getQues/" + examId + "/" + subject,
+BASE_URL + "/addQuestions/examQuestions/" + examId + "/" + subject,
 { headers }
 )
 

@@ -87,6 +87,9 @@ ${subjects || "No questions added"}
 </div>
 
 <div class="exam-actions">
+<button class="primary" onclick="toggleExam('${exam._id}')">
+${exam.visibility ? "Hide Exam" : "Publish Exam"}
+</button>
 
 <button class="primary"
 onclick="location.href='addQuestions.html?examId=${exam._id}'">
@@ -122,4 +125,23 @@ function openExam(id){
 window.location.href = "manageExam.html?examId=" + id
 
 }
+
 loadDashboard()
+
+async function toggleExam(examId){
+
+const res = await fetch(
+BASE_URL + "/createExam/visible/" + examId,
+{
+method:"PUT",
+headers:authHeader()
+}
+)
+
+const data = await res.json()
+
+alert(data.message)
+
+loadDashboard()
+
+}
